@@ -1,0 +1,18 @@
+stages:
+  - build:package:zip
+
+build_package_zip:
+  only:
+    refs:
+      - develop
+  stage: build:package:zip
+  image: node:alpine
+  artifacts:
+    paths:
+      - package.zup
+  script:
+    - apk add --no-cache zip
+    - npm ci
+    - npm run build
+    - rm -rf node_modules
+    - zip -r package.zip .
