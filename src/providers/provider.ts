@@ -19,6 +19,7 @@ export interface ProviderParams {
 }
 
 export interface ProviderOptions {
+  internal?: ProviderParams;
   params?: ProviderParams;
 }
 

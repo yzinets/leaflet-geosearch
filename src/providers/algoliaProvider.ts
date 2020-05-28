@@ -85,25 +85,29 @@ export default class Provider extends AbstractProvider<
   getLabel(result: RawResult): string {
     return [
       // Building + Street
-      result.locale_names?.default[
-        this.findBestMatchLevelIndex(
-          result._highlightResult.locale_names.default,
-        )
-      ],
+      !this.options.internal?.hideLocale &&
+        result.locale_names?.default[
+          this.findBestMatchLevelIndex(
+            result._highlightResult.locale_names.default,
+          )
+        ],
       // City
-      result.city?.default[
-        this.findBestMatchLevelIndex(result._highlightResult.city.default)
-      ],
+      !this.options.internal?.hideCity &&
+        result.city?.default[
+          this.findBestMatchLevelIndex(result._highlightResult.city.default)
+        ],
       // Administrative (State / Province)
-      result.administrative[
-        this.findBestMatchLevelIndex(result._highlightResult.administrative)
-      ],
+      !this.options.internal?.hideAdministrative &&
+        result.administrative[
+          this.findBestMatchLevelIndex(result._highlightResult.administrative)
+        ],
       // Zip code / Postal code
-      result.postcode?.[
-        this.findBestMatchLevelIndex(result._highlightResult.postcode)
-      ],
+      !this.options.internal?.hideZipCode &&
+        result.postcode?.[
+          this.findBestMatchLevelIndex(result._highlightResult.postcode)
+        ],
       // Country
-      result.country?.default,
+      !this.options.internal?.hideCountry && result.country?.default,
     ]
       .filter(Boolean)
       .join(', ');
